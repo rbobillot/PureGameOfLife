@@ -4,7 +4,7 @@ import java.awt.event.{ KeyEvent, KeyListener, MouseWheelListener }
 import java.awt.{ Color, Dimension, Graphics, Graphics2D }
 
 import cats.effect.IO
-import gameoflife.game.grid.Grid
+import gameoflife.game.grid.{ Cell, Grid }
 import javax.swing.border.TitledBorder
 import javax.swing.{ JFrame, JPanel, JScrollPane }
 
@@ -19,17 +19,6 @@ object Gui {
   class LifePanel(grid: Grid) extends JPanel with KeyListener {
 
     addKeyListener(this)
-
-    private def scaleIn(): Unit = {
-      val w = getWidth / SCALE
-      val h = getHeight / SCALE
-
-      SCALE += 1
-
-      val nW = getWidth / SCALE
-      val nH = getHeight / SCALE
-
-    }
 
     override def keyPressed(e: KeyEvent): Unit = {
       e.getKeyCode match {
@@ -56,8 +45,10 @@ object Gui {
     private def drawCells(g: Graphics2D): IO[Unit] =
       for {
         _ <- IO.apply(g.setColor(if (negative) Color.WHITE else Color.BLACK))
-        cells <- IO.pure(grid.livingCells)
-      } yield cells.foreach(c => g.fillRect((c.x + x) * SCALE, (c.y + y) * SCALE, SCALE, SCALE))
+        lvCells <- IO.pure(grid.livingCells)
+        padCell <- IO.pure((c: Cell) => c.copy(x = c.x + x, y = c.y + y))
+        putCell <- IO.pure((c: Cell) => g.fillRect(c.x * SCALE, c.y * SCALE, SCALE, SCALE))
+      } yield lvCells.foreach(padCell andThen putCell)
 
     override def paint(gs: Graphics): Unit = {
       for {
