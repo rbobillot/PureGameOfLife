@@ -19,24 +19,6 @@ class LifePanel(grid: Grid) extends JPanel with KeyListener {
 
   import gameoflife.io.gui.LifePanel._
 
-  addKeyListener(this)
-
-  override def keyPressed(e: KeyEvent): Unit = {
-    e.getKeyCode match {
-      case 61 /* VK_PLUS? */ | KeyEvent.VK_I if scale < 30 => scale += 1
-      case KeyEvent.VK_MINUS | KeyEvent.VK_O if scale > 1  => scale -= 1
-      case KeyEvent.VK_LEFT                                => x += 1
-      case KeyEvent.VK_RIGHT                               => x -= 1
-      case KeyEvent.VK_UP                                  => y += 1
-      case KeyEvent.VK_DOWN                                => y -= 1
-      case KeyEvent.VK_N                                   => negative = !negative
-      case KeyEvent.VK_SPACE                               => pause = !pause
-      case _                                               => ()
-    }
-  }
-  override def keyReleased(e: KeyEvent): Unit = ()
-  override def keyTyped(e: KeyEvent): Unit = ()
-
   private def drawAxis(g: Graphics2D): IO[Unit] =
     for {
       _ <- IO.apply(g.setColor(if (negative) Color.DARK_GRAY else Color.LIGHT_GRAY))
@@ -52,6 +34,23 @@ class LifePanel(grid: Grid) extends JPanel with KeyListener {
       putCell <- IO.pure((c: Cell) => g.fillRect(c.x * scale, c.y * scale, scale - 1, scale - 1))
     } yield lvCells.foreach(padCell andThen putCell)
 
+  override def keyPressed(e: KeyEvent): Unit =
+    e.getKeyCode match {
+      case 61 /* VK_PLUS? */ | KeyEvent.VK_I if scale < 30 => scale += 1
+      case KeyEvent.VK_MINUS | KeyEvent.VK_O if scale > 1  => scale -= 1
+      case KeyEvent.VK_LEFT                                => x += 1
+      case KeyEvent.VK_RIGHT                               => x -= 1
+      case KeyEvent.VK_UP                                  => y += 1
+      case KeyEvent.VK_DOWN                                => y -= 1
+      case KeyEvent.VK_N                                   => negative = !negative
+      case KeyEvent.VK_SPACE                               => pause = !pause
+      case _                                               => ()
+    }
+
+  override def keyReleased(e: KeyEvent): Unit = ()
+
+  override def keyTyped(e: KeyEvent): Unit = ()
+
   override def paint(gs: Graphics): Unit = {
     for {
       g <- IO.apply(gs.asInstanceOf[Graphics2D])
@@ -61,5 +60,7 @@ class LifePanel(grid: Grid) extends JPanel with KeyListener {
       _ <- drawCells(g)
     } yield ()
   }.unsafeRunSync()
+
+  addKeyListener(this)
 
 }
