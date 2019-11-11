@@ -38,3 +38,12 @@ You can also choose to run it with a simple Swing GUI, by setting it in `applica
 gui = true
 ```
 ![pgol-gui-bw](https://user-images.githubusercontent.com/6177702/68556332-bed4aa80-0429-11ea-81c8-87db3d764221.png)
+You can interact with the GUI, using the keyboard
+```
+Arrow keys : navigate left, right, up, down
+
+I/O : zoom In/Out
++/- : zoom In/Out
+
+N : toggle negative mode (b&w switch)
+```

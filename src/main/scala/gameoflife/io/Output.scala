@@ -2,7 +2,6 @@ package gameoflife.io
 
 import cats.effect.IO
 import gameoflife.game.grid.{ Cell, Grid }
-import Config.cellOutputColors
 import javax.swing.JFrame
 
 object Output {
@@ -21,6 +20,7 @@ object Output {
       f <- IO.apply(gui.get) // crash case handled in displayAndSleep
       p <- IO.pure(new Gui.LifePanel(grid))
       _ <- IO.apply(f.setContentPane(p))
+      _ <- IO.apply(f.setFocusable(true))
       _ <- IO.apply(f.setTitle(s"Game Of Life - Iteration #$iteration"))
       _ <- IO.apply(f.validate())
     } yield ()
@@ -28,7 +28,7 @@ object Output {
   def displayAndSleep(grid: Grid, gui: Option[JFrame], iteration: Int)(implicit interval: Int): IO[Unit] =
     for {
       _ <- displayGuiGrid(gui, grid, iteration).handleErrorWith(_ => displayTermGrid(grid, iteration))
-      _ <- IO { Thread sleep interval } // sleep before re-print
+      _ <- IO.apply(Thread sleep interval).handleErrorWith(_ => IO.unit) // sleep before re-print
     } yield ()
 
 }
