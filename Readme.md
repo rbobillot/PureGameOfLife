@@ -41,6 +41,7 @@ gui = true
 You can interact with the GUI, using the keyboard
 ```
 Arrow keys : navigate left, right, up, down
+Space bar  : toggle pause
 
 I/O : zoom In/Out
 +/- : zoom In/Out

@@ -112,7 +112,9 @@ class LifeSpec extends WordSpec with Matchers with Shapes with PrivateMethodTest
               . . . . . .          . . . . . .
          */
         val currentStateRef = Ref.of[IO, Grid](nonEmptyGrid)
-        val nextState = nonEmptyGrid.copy(livingCells = Set(livingCell0, livingCell1, livingCell2, Cell(3, 2)))
+        val nextState = nonEmptyGrid.copy(
+          livingCells = Set(livingCell0, livingCell1, livingCell2, Cell(3, 2)),
+          iteration   = 1)
 
         currentStateRef.flatMap(r => Life.invokePrivate(nextGridState(r))).unsafeRunSync shouldEqual nextState
       }
