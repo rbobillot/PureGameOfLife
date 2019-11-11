@@ -27,7 +27,7 @@ sbt 'run src/main/resources/test.txt 700'
 Notes:
  - If an error is raised (invalid file...), a NonZero exit code is returned (`sbt run` will then return an error)
  - I could have used the Validated Applicative, I might add it later
- - The `resources` dir contains the original monolithic version of the code (way less pure, but not that bad)
+ - I might create a more customizable GUI
 
 ![Exemple Gif](https://gist.githubusercontent.com/rbobillo/671be48dfb70466a6d788922c1b2fb7e/raw/51bb4f6c0acd02c062942ac109a9b895f769a1de/gol_ror.gif)
 
@@ -37,4 +37,4 @@ You can also choose to run it with a simple Swing GUI, by setting it in `applica
 ```
 gui = true
 ```
-![pgol-gui](https://user-images.githubusercontent.com/6177702/68556106-cc3d6500-0428-11ea-8684-b7ce233df6d8.png)
+![pgol-gui-bw](https://user-images.githubusercontent.com/6177702/68556332-bed4aa80-0429-11ea-81c8-87db3d764221.png)

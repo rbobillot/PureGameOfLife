@@ -15,7 +15,8 @@ object Gui {
       for {
         g <- IO.apply(gs.asInstanceOf[Graphics2D])
         _ <- IO.apply(this.removeAll())
-        _ <- IO.apply(g.setColor(Color.BLACK))
+        _ <- IO.apply(this.setBackground(Color.BLACK))
+        _ <- IO.apply(g.setColor(Color.WHITE))
       } yield grid.livingCells.foreach(c => g.fillRect(c.x * SCALE, c.y * SCALE, SCALE, SCALE))
     }.unsafeRunSync()
   }
