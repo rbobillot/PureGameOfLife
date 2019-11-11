@@ -43,9 +43,9 @@ trait Setup {
     for {
       rows <- gameoflife.io.Input.gridFromFile(file)
       grid <- validateGrid(rows)
-      columns <- IO.pure(grid.head.size)
-      lines <- IO.pure(grid.size)
+      cols <- IO.pure(grid.head.size)
+      rows <- IO.pure(grid.size)
       livingCells <- IO.pure(linesToGridCells(grid).toSet)
-    } yield Grid(columns, lines, livingCells)
+    } yield Grid(cols, rows, livingCells)
 
 }

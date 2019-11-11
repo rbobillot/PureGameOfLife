@@ -2,6 +2,8 @@ package gameoflife.io
 
 import cats.effect.IO
 
+import scala.io.Source
+
 object Input {
 
   private def linesToGrid(lines: Seq[String]): IO[Seq[Seq[String]]] =
@@ -9,8 +11,10 @@ object Input {
 
   def gridFromFile(file: String): IO[Seq[Seq[String]]] =
     for {
-      lines <- IO { scala.io.Source.fromFile(file).getLines.toSeq }
-      grid <- linesToGrid(lines)
-    } yield grid
+      src <- IO.apply(Source fromFile file)
+      lns <- IO.apply(src.getLines.toSeq)
+      grd <- linesToGrid(lns)
+      _ <- IO.apply(src.close)
+    } yield grd
 
 }

@@ -2,9 +2,9 @@ package gameoflife.game
 
 import cats.effect.{ ExitCode, IO }
 import cats.effect.concurrent.Ref
-
 import gameoflife.game.grid.Grid
 import gameoflife.io.Output
+import javax.swing.JFrame
 
 class Life // empty class with its fake companion object: made to test Life's private methods
 
@@ -17,7 +17,7 @@ object Life {
   private def nextGridState(state: Ref[IO, Grid]): IO[Grid] =
     state.modify(_.nextState)
 
-  def displayAndEvolve(grid: Grid, gui: Boolean, iteration: Int = 0)(implicit interval: Int): IO[Unit] =
+  def displayAndEvolve(grid: Grid, gui: Option[JFrame], iteration: Int = 0)(implicit interval: Int): IO[Unit] =
     for {
       r <- Ref.of[IO, Grid](grid) // define State Ref for grid
       _ <- Output.displayAndSleep(grid, gui, iteration)

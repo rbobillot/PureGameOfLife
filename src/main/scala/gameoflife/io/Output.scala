@@ -1,9 +1,9 @@
 package gameoflife.io
 
 import cats.effect.IO
-
 import gameoflife.game.grid.{ Cell, Grid }
 import Config.cellOutputColors
+import javax.swing.JFrame
 
 object Output {
 
@@ -16,12 +16,18 @@ object Output {
       _ <- IO { println(grid stringify iteration) }
     } yield ()
 
-  private def displayGuiGrid(grid: Grid, iteration: Int)(implicit interval: Int): IO[Unit] =
-    IO.unit
-
-  def displayAndSleep(grid: Grid, gui: Boolean, iteration: Int)(implicit interval: Int): IO[Unit] =
+  private def displayGuiGrid(gui: Option[JFrame], grid: Grid, iteration: Int)(implicit interval: Int): IO[Unit] =
     for {
-      _ <- if (gui) displayGuiGrid(grid, iteration) else displayTermGrid(grid, iteration)
+      f <- IO.apply(gui.get) // crash case handled in displayAndSleep
+      p <- IO.pure(new Gui.LifePanel(grid))
+      _ <- IO.apply(f.setContentPane(p))
+      _ <- IO.apply(f.setTitle(s"Game Of Life - Iteration #$iteration"))
+      _ <- IO.apply(f.validate())
+    } yield ()
+
+  def displayAndSleep(grid: Grid, gui: Option[JFrame], iteration: Int)(implicit interval: Int): IO[Unit] =
+    for {
+      _ <- displayGuiGrid(gui, grid, iteration).handleErrorWith(_ => displayTermGrid(grid, iteration))
       _ <- IO { Thread sleep interval } // sleep before re-print
     } yield ()
 
