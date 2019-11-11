@@ -5,9 +5,10 @@ import cats.effect.{ ExitCode, IO, IOApp }
 import cats.syntax.all._
 import gameoflife.game.Life
 import gameoflife.game.grid.Setup
-import gameoflife.io.{ Gui, Output }
+import gameoflife.io.Output
 import gameoflife.io.Config.refreshInterval.defaultInterval
 import gameoflife.io.Config.outputMethod.gui
+import gameoflife.io.gui.Gui
 
 object Main extends IOApp with Setup {
 

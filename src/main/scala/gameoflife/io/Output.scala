@@ -2,6 +2,7 @@ package gameoflife.io
 
 import cats.effect.IO
 import gameoflife.game.grid.{ Cell, Grid }
+import gameoflife.io.gui.{ Gui, LifePanel }
 import javax.swing.JFrame
 
 object Output {
@@ -18,7 +19,7 @@ object Output {
   private def displayGuiGrid(gui: Option[JFrame], grid: Grid, iteration: Int)(implicit interval: Int): IO[Unit] =
     for {
       f <- IO.apply(gui.get) // crash case handled in displayAndSleep
-      p <- IO.pure(new Gui.LifePanel(grid))
+      p <- IO.pure(new LifePanel(grid))
       _ <- IO.apply(f.setContentPane(p))
       _ <- IO.apply(f.setFocusable(true))
       _ <- IO.apply(f.setTitle(s"Game Of Life - Iteration #$iteration"))
