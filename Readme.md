@@ -37,4 +37,4 @@ You can also choose to run it with a simple Swing GUI, by setting it in `applica
 ```
 gui = true
 ```
-![gol-gui](https://user-images.githubusercontent.com/6177702/68555908-df9c0080-0427-11ea-96e7-1063de3781fb.png)
+![pgol-gui](https://user-images.githubusercontent.com/6177702/68556106-cc3d6500-0428-11ea-8684-b7ce233df6d8.png)
