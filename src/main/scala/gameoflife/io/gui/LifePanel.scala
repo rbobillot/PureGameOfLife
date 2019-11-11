@@ -49,7 +49,7 @@ class LifePanel(grid: Grid) extends JPanel with KeyListener {
       _ <- IO.apply(g.setColor(if (negative) Color.WHITE else Color.BLACK))
       lvCells <- IO.pure(grid.livingCells)
       padCell <- IO.pure((c: Cell) => c.copy(x = c.x + x, y = c.y + y))
-      putCell <- IO.pure((c: Cell) => g.fillRect(c.x * scale, c.y * scale, scale, scale))
+      putCell <- IO.pure((c: Cell) => g.fillRect(c.x * scale, c.y * scale, scale - 1, scale - 1))
     } yield lvCells.foreach(padCell andThen putCell)
 
   override def paint(gs: Graphics): Unit = {
