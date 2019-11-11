@@ -17,12 +17,12 @@ object Life {
   private def nextGridState(state: Ref[IO, Grid]): IO[Grid] =
     state.modify(_.nextState)
 
-  def displayAndEvolve(grid: Grid, iteration: Int = 0)(implicit interval: Int): IO[Unit] =
+  def displayAndEvolve(grid: Grid, gui: Boolean, iteration: Int = 0)(implicit interval: Int): IO[Unit] =
     for {
       r <- Ref.of[IO, Grid](grid) // define State Ref for grid
-      _ <- Output.displayAndSleep(grid, iteration)
+      _ <- Output.displayAndSleep(grid, gui, iteration)
       g <- nextGridState(r)
-      _ <- if (g.livingCells == grid.livingCells) IO.unit else displayAndEvolve(g, iteration + 1)
+      _ <- if (g.livingCells == grid.livingCells) IO.unit else displayAndEvolve(g, gui, iteration + 1)
     } yield ()
 
 }

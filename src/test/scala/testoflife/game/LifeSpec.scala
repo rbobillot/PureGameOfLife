@@ -29,7 +29,7 @@ class LifeSpec extends WordSpec with Matchers with Shapes with PrivateMethodTest
 
   /* ****************** PRIVATE METHODS TO TEST ******************* */
 
-  private val nextGridState = PrivateMethod[IO[Grid]]('nextGridState)
+  private val nextGridState = PrivateMethod[IO[Grid]](Symbol("nextGridState"))
 
   /* ************************ DEAD CELLS ************************** */
 

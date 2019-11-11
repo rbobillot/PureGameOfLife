@@ -6,24 +6,23 @@ assemblyJarName in assembly := "gameoflife.jar"
 
 version := "1.0.1"
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.13.1"
 
 scalacOptions ++= Seq(
-  "-Ypartial-unification",
   "-deprecation"
 )
 
 libraryDependencies ++= Seq(
-  "org.typelevel"         %% "cats-core"   % "1.5.0",
-  "org.typelevel"         %% "cats-effect" % "1.2.0",
+  "org.typelevel"         %% "cats-core"   % "2.0.0",
+  "org.typelevel"         %% "cats-effect" % "2.0.0",
 
-  "com.github.pureconfig" %% "pureconfig"  % "0.10.2",
+  "com.github.pureconfig" %% "pureconfig"  % "0.12.1",
 
-  "org.scalatest"         %% "scalatest"   % "3.0.4" % "test"
+  "org.scalatest"         %% "scalatest"   % "3.0.8" % "test"
 )
 
 //================================================================================
-// ScalaRiform configurations
+// Scalariform configurations
 //================================================================================
 scalariformPreferences := scalariformPreferences.value
   .setPreference(AlignArguments, true)

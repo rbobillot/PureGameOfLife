@@ -9,12 +9,13 @@ import gameoflife.game.Life
 import gameoflife.game.grid.Setup
 import gameoflife.io.Output
 import gameoflife.io.Config.refreshInterval.defaultInterval
+import gameoflife.io.Config.outputMethod.gui
 
 object Main extends IOApp with Setup {
 
   private def createLife(file: String)(implicit interval: Int): IO[ExitCode] =
     initGrid(file).attempt.flatMap {
-      case Right(grid) => Life.displayAndEvolve(grid).as(ExitCode.Success)
+      case Right(grid) => Life.displayAndEvolve(grid, gui).as(ExitCode.Success)
       case Left(error) => Output.logError(error.getMessage).as(ExitCode.Error)
     }
 
