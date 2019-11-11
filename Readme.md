@@ -30,3 +30,11 @@ Notes:
  - The `resources` dir contains the original monolithic version of the code (way less pure, but not that bad)
 
 ![Exemple Gif](https://gist.githubusercontent.com/rbobillo/671be48dfb70466a6d788922c1b2fb7e/raw/51bb4f6c0acd02c062942ac109a9b895f769a1de/gol_ror.gif)
+
+GUI
+=
+You can also choose to run it with a simple Swing GUI, by setting it in `application.conf`
+```
+gui = true
+```
+![gol-gui](https://user-images.githubusercontent.com/6177702/68555908-df9c0080-0427-11ea-96e7-1063de3781fb.png)
