@@ -21,7 +21,7 @@ This example will run a short GoL:
 sbt 'run src/main/resources/test.txt 700'
 
 // or create a jar, so you dont load sbt the next time
-// sbt assembly && scala target/scala-2.12/gameoflife.jar src/main/resources/rorschach.txt
+// sbt assembly && scala target/scala-2.13/gameoflife.jar src/main/resources/rorschach.txt
 ```
 
 Notes:
