@@ -35,17 +35,17 @@ class LifePanel(grid: Grid) extends JPanel with KeyListener {
     } yield lvCells.foreach(padCell andThen putCell)
 
   override def keyPressed(e: KeyEvent): Unit =
-    e.getKeyCode match {
-      case 61 /* VK_PLUS? */ | KeyEvent.VK_I if scale < 30 => scale += 1
-      case KeyEvent.VK_MINUS | KeyEvent.VK_O if scale > 1  => scale -= 1
-      case KeyEvent.VK_LEFT                                => x += 1
-      case KeyEvent.VK_RIGHT                               => x -= 1
-      case KeyEvent.VK_UP                                  => y += 1
-      case KeyEvent.VK_DOWN                                => y -= 1
-      case KeyEvent.VK_N                                   => negative = !negative
-      case KeyEvent.VK_SPACE                               => pause = !pause
-      case _                                               => ()
-    }
+    (e.getKeyCode match {
+      case 61 /* VK_PLUS? */ | KeyEvent.VK_I if scale < 30 => IO.apply { scale += 1 }
+      case KeyEvent.VK_MINUS | KeyEvent.VK_O if scale > 1  => IO.apply { scale -= 1 }
+      case KeyEvent.VK_LEFT                                => IO.apply { x += 1 }
+      case KeyEvent.VK_RIGHT                               => IO.apply { x -= 1 }
+      case KeyEvent.VK_UP                                  => IO.apply { y += 1 }
+      case KeyEvent.VK_DOWN                                => IO.apply { y -= 1 }
+      case KeyEvent.VK_N                                   => IO.apply { negative = !negative }
+      case KeyEvent.VK_SPACE                               => IO.apply { pause = !pause }
+      case _                                               => IO.unit
+    }).unsafeRunSync()
 
   override def keyReleased(e: KeyEvent): Unit = ()
 
